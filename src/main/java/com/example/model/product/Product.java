@@ -63,31 +63,4 @@ public class Product {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = name;
     }
-
 }
-
-// class ProductDao {
-//     // private static final String INSERT_PRODUCT = "INSERT INTO testing (name, description, price) VALUES (?, ?, ?)";
-//     // private static final String SELECT_ALL_PRODUCTS = "SELECT * FROM testing";
-//     // private static final String UPDATE_PRODUCT = "UPDATE testing SET name = ?, description = ?, price = ? WHERE id = ?";
-//     // private static final String DELETE_PRODUCT = "DELETE FROM testing WHERE id = ?";
-
-//     public List<Product> getAllProducts() {
-//         List<Product> products = new ArrayList<>();
-//         try (Connection connection = Database.getConnection();
-//              Statement statement = connection.createStatement();
-//              ResultSet resultSet = statement.executeQuery(SELECT_ALL_PRODUCTS)) {
-//             while (resultSet.next()) {
-//                 Integer id = resultSet.getInt("id");
-//                 String name = resultSet.getString("nama");
-//                 String description = resultSet.getString("nama");
-//                 double price = resultSet.getDouble("nomor");
-//                 Product product = new Product(id, name, description, price);
-//                 products.add(product);
-//             }
-//         } catch (SQLException e) {
-//             e.printStackTrace();
-//         }
-//         return products;
-//     }
-// }
