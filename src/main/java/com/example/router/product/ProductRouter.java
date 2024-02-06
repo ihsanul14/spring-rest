@@ -41,31 +41,6 @@ class Request {
     }
 }
 
-class ResponseProduct {
-    private Integer code;
-    private String message;
-    private List<Product> data;
-
-    public Integer getCode(){
-        return code;
-    }
-    public String getMessage(){
-        return message;
-    }
-    public List<Product> getData(){
-        return data;
-    }
-    public void setCode(Integer code){
-        this.code = code;
-    }
-    public void setMessage(String message){
-        this.message = message;
-    }
-    public void setData(List<Product> data){
-        this.data = data;
-    }
-}
-
 @RestController
 @RequestMapping("/api/data")
 public class ProductRouter {
@@ -86,12 +61,12 @@ public class ProductRouter {
             response.setCode(200);
             response.setMessage("Success");
             response.setData(productUsecase.GetData());
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
         }catch(Exception err){
             response.setCode(500);
             response.setMessage(err.toString());
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -105,12 +80,13 @@ public class ProductRouter {
             response.setMessage("Success");
             productUsecase.GetDataById(id).ifPresent(res::add);
             response.setData(res); 
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
         }catch(Exception err){
             response.setCode(500);
             response.setMessage(err.toString());
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
-        return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
     }
     
     @PostMapping
@@ -125,12 +101,12 @@ public class ProductRouter {
             product.setName(data.getNama());
             product.setNomor(data.getNomor());
             productUsecase.Create(product);
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
         }catch(Exception err){
             response.setCode(500);
             response.setMessage(err.toString());
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -146,12 +122,12 @@ public class ProductRouter {
             product.setName(data.getNama());
             product.setNomor(data.getNomor());
             productUsecase.Create(product);
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
         }catch(Exception err){
             response.setCode(500);
             response.setMessage(err.toString());
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -165,11 +141,11 @@ public class ProductRouter {
             Product product = new Product();
             product.setId(id);
             productUsecase.Delete(product);
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
         }catch(Exception err){
             response.setCode(500);
             response.setMessage(err.toString());
+            return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
-        return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
     }
 }
