@@ -3,7 +3,7 @@ package com.example.usecase.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.repository.product.ProductRepository;
 import com.example.model.product.Product;
-import java.util.List;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +14,10 @@ public class ProductUsecase {
     
     public List<Product> GetData() {
         return this.productRepository.findAll();
+    }
+
+    public Optional<Product> GetDataById(Long id) {
+        return this.productRepository.findById(id);
     }
     
     public void Create(Product data) {

@@ -16,6 +16,8 @@ import com.google.gson.Gson;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.example.model.product.Product;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,18 +55,15 @@ class ResponseProduct {
     public List<Product> getData(){
         return data;
     }
-
     public void setCode(Integer code){
         this.code = code;
     }
-
     public void setMessage(String message){
         this.message = message;
     }
     public void setData(List<Product> data){
         this.data = data;
     }
-
 }
 
 @RestController
@@ -83,10 +82,29 @@ public class ProductRouter {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         ResponseProduct response = new ResponseProduct();
-        try{
+        try{ 
             response.setCode(200);
             response.setMessage("Success");
-            response.setData(productUsecase.GetData());    
+            response.setData(productUsecase.GetData());
+        }catch(Exception err){
+            response.setCode(500);
+            response.setMessage(err.toString());
+        }
+        
+        return new ResponseEntity<>(gson.toJson(response), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<String> GetDataById(@PathVariable("id") Long id) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        ResponseProduct response = new ResponseProduct();
+        try{
+            List<Product> res = new ArrayList<>();
+            response.setCode(200);
+            response.setMessage("Success");
+            productUsecase.GetDataById(id).ifPresent(res::add);
+            response.setData(res); 
         }catch(Exception err){
             response.setCode(500);
             response.setMessage(err.toString());
