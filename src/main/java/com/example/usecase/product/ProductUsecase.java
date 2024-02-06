@@ -14,5 +14,17 @@ public class ProductUsecase {
     
     public List<Product> GetData() {
         return this.productRepository.findAll();
-    } 
+    }
+    
+    public void Create(Product data) {
+        this.productRepository.save(data);
+    }
+
+    public void Update(Product data) {
+        this.productRepository.save(data);
+    }
+
+    public void Delete(Product data) {
+        this.productRepository.delete(data);
+    }
 }

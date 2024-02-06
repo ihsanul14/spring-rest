@@ -2,12 +2,15 @@ package com.example.model.product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "testing")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "nama")
